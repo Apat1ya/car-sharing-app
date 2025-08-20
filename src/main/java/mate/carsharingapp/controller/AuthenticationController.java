@@ -2,7 +2,10 @@ package mate.carsharingapp.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import mate.carsharingapp.dto.user.UserLoginRequestDto;
+import mate.carsharingapp.dto.user.UserLoginResponseDto;
 import mate.carsharingapp.dto.user.UserRegistrationRequestDto;
 import mate.carsharingapp.dto.user.UserResponseDto;
 import mate.carsharingapp.exception.RegistrationException;
@@ -32,5 +35,14 @@ public class AuthenticationController {
     public UserResponseDto registration(@RequestBody UserRegistrationRequestDto request)
             throws RegistrationException {
         return userService.register(request);
+    }
+
+    @PostMapping("/login")
+    @Operation(
+            summary = "User Login",
+            description = "Endpoint for authenticating an existing user"
+    )
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {
+        return authenticationService.authenticate(requestDto);
     }
 }
