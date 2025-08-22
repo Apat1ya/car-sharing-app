@@ -46,6 +46,10 @@ public class CarController {
         return carService.findById(id);
     }
 
+    @Operation(
+            summary = "Create new car",
+            description = "Create and save new car"
+    )
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAnyRole('MANAGER')")
@@ -53,6 +57,10 @@ public class CarController {
         return carService.create(requestDto);
     }
 
+    @Operation(
+            summary = "update car",
+            description = "update car by id"
+    )
     @PatchMapping("/{id}")
     @PreAuthorize("hasAnyRole('MANAGER')")
     public CarResponseDto update(@PathVariable Long id,
@@ -60,6 +68,10 @@ public class CarController {
         return carService.update(id, requestDto);
     }
 
+    @Operation(
+            summary = "delete car",
+            description = "delete car by id"
+    )
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAnyRole('MANAGER')")
