@@ -14,7 +14,7 @@ public class CarRequestDto {
     private String model;
     @NotBlank
     private String brand;
-    @NotBlank
+    @NotNull
     private Type type;
     @NotNull
     private int inventory;

@@ -52,7 +52,7 @@ public class CarController {
     )
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAnyRole('MANAGER')")
+    @PreAuthorize("hasRole('MANAGER')")
     public CarResponseDto create(@Valid @RequestBody CarRequestDto requestDto) {
         return carService.create(requestDto);
     }
@@ -62,7 +62,7 @@ public class CarController {
             description = "update car by id"
     )
     @PatchMapping("/{id}")
-    @PreAuthorize("hasAnyRole('MANAGER')")
+    @PreAuthorize("hasRole('MANAGER')")
     public CarResponseDto update(@PathVariable Long id,
                                  @Valid @RequestBody CarRequestDto requestDto) {
         return carService.update(id, requestDto);
@@ -74,7 +74,7 @@ public class CarController {
     )
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAnyRole('MANAGER')")
+    @PreAuthorize("hasRole('MANAGER')")
     public void delete(@PathVariable Long id) {
         carService.delete(id);
     }
