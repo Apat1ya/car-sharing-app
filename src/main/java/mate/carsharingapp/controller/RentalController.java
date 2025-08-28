@@ -40,4 +40,10 @@ public class RentalController {
         return rentalService.findAllByUserIdAndIsActive(userId, isActive);
     }
 
+    @PostMapping("/{id}/return")
+    @PreAuthorize("hasAnyRole('MANAGER','CUSTOMER')")
+    public RentalResponseDto returnRental(@PathVariable Long id) {
+        return rentalService.returnRental(id);
+    }
+
 }

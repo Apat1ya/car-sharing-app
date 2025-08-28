@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import mate.carsharingapp.dto.rental.RentalRequestDto;
 import mate.carsharingapp.dto.rental.RentalResponseDto;
 import mate.carsharingapp.exception.EntityNotFoundException;
+import mate.carsharingapp.exception.NotificationException;
 import mate.carsharingapp.exception.PermissionDeniedException;
 import mate.carsharingapp.exception.UnavailableCarException;
 import mate.carsharingapp.mapper.RentalMapper;
@@ -15,6 +16,7 @@ import mate.carsharingapp.model.user.User;
 import mate.carsharingapp.repository.car.CarRepository;
 import mate.carsharingapp.repository.rental.RentalRepository;
 import mate.carsharingapp.repository.user.UserRepository;
+import mate.carsharingapp.service.telegram.notification.TelegramNotificationService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +31,7 @@ public class RentalServiceImpl implements RentalService {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
     private final RentalMapper rentalMapper;
+    private final TelegramNotificationService notificationService;
 
     @Override
     public RentalResponseDto create(RentalRequestDto requestDto) {
@@ -53,6 +56,7 @@ public class RentalServiceImpl implements RentalService {
         rental.setActive(true);
 
         rentalRepository.save(rental);
+        notificationService.sentNotificationCreateRental(rental, user, car.getModel());
         return rentalMapper.toResponseDto(rental);
     }
 
@@ -81,6 +85,7 @@ public class RentalServiceImpl implements RentalService {
         rental.setActive(false);
         rental.setActualReturnDate(LocalDate.now());
         Rental savedRental = rentalRepository.save(rental);
+        notificationService.sentNotificationReturnedRental(rental,user);
         return rentalMapper.toResponseDto(savedRental);
     }
 
@@ -100,6 +105,21 @@ public class RentalServiceImpl implements RentalService {
         for (Rental rental : rentals) {
             if (rental.getReturnDate().isBefore(today) || rental.getReturnDate().isEqual(today)) {
                 rental.setActive(false);
+            }
+        }
+    }
+
+    @Scheduled(cron = "0 0 9 * * ?")
+    public void notificationOfOverdueRentals() {
+        List<Rental> rentals = rentalRepository.findAllByReturnDateLessThan(LocalDate.now());
+        for (Rental rental : rentals) {
+            try {
+                notificationService.sendNotificationOverdueRental(rental,
+                        rental.getUser(),
+                        rental.getReturnDate());
+            } catch (NotificationException e) {
+                throw new NotificationException("Unable to send notification"
+                        + "because user not found." + e);
             }
         }
     }
