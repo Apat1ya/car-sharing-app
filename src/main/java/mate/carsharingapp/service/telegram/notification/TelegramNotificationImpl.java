@@ -2,6 +2,7 @@ package mate.carsharingapp.service.telegram.notification;
 
 import java.time.LocalDate;
 import lombok.SneakyThrows;
+import mate.carsharingapp.model.payment.Payment;
 import mate.carsharingapp.model.rental.Rental;
 import mate.carsharingapp.model.user.User;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,6 +54,20 @@ public class TelegramNotificationImpl implements TelegramNotificationService {
         String message = "⚠ Your rental #" + rental.getId()
                 + " for the car is overdue! Return date: "
                 + date;
+        sendNotification(user,message);
+    }
+
+    @Override
+    public void sendNotificationSuccessPayment(Payment payment, User user) {
+        String message = "Your payment #" + payment.getId()
+                + " was successful!";
+        sendNotification(user,message);
+    }
+
+    @Override
+    public void sendNotificationCancelPayment(Payment payment, User user) {
+        String message = "⚠ Your payment #" + payment.getId()
+                + " was cancel";
         sendNotification(user,message);
     }
 }

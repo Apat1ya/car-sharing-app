@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 08-create-payment-table
+      author: developer
+      changes:
+        - modifyDataType:
+            tableName: payments
+            columnName: session_id
+            newDataType: VARCHAR(500)

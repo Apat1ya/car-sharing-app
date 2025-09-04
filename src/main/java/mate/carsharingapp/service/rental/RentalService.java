@@ -1,8 +1,9 @@
 package mate.carsharingapp.service.rental;
 
-import java.util.List;
 import mate.carsharingapp.dto.rental.RentalRequestDto;
 import mate.carsharingapp.dto.rental.RentalResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface RentalService {
     RentalResponseDto create(RentalRequestDto requestDto);
@@ -11,6 +12,8 @@ public interface RentalService {
 
     RentalResponseDto returnRental(Long id);
 
-    List<RentalResponseDto> findAllByUserIdAndIsActive(Long userId, boolean isActive);
+    Page<RentalResponseDto> findAllByUserIdAndIsActive(Long userId,
+                                                       boolean isActive,
+                                                       Pageable pageable);
 
 }

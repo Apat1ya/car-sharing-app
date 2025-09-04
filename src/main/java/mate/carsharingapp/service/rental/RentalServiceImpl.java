@@ -17,6 +17,8 @@ import mate.carsharingapp.repository.car.CarRepository;
 import mate.carsharingapp.repository.rental.RentalRepository;
 import mate.carsharingapp.repository.user.UserRepository;
 import mate.carsharingapp.service.telegram.notification.TelegramNotificationService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -90,11 +92,13 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public List<RentalResponseDto> findAllByUserIdAndIsActive(Long userId, boolean isActive) {
-        List<Rental> rentals = rentalRepository.findAllByUserIdAndIsActive(userId, isActive);
-        return rentals.stream()
-                .map(rentalMapper::toResponseDto)
-                .toList();
+    public Page<RentalResponseDto> findAllByUserIdAndIsActive(Long userId,
+                                                              boolean isActive,
+                                                              Pageable pageable) {
+        Page<Rental> rentals = rentalRepository.findAllByUserIdAndIsActive(userId,
+                isActive,
+                pageable);
+        return rentals.map(rentalMapper::toResponseDto);
 
     }
 
@@ -123,5 +127,4 @@ public class RentalServiceImpl implements RentalService {
             }
         }
     }
-
 }

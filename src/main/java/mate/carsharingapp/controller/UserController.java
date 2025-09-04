@@ -1,6 +1,7 @@
 package mate.carsharingapp.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import mate.carsharingapp.dto.user.UserResponseDto;
 import mate.carsharingapp.dto.user.UserUpdateProfileDto;
@@ -48,7 +49,7 @@ public class UserController {
     )
     @PatchMapping("/me")
     @PreAuthorize("hasAnyRole('MANAGER','CUSTOMER')")
-    public UserResponseDto updateProfile(@RequestBody UserUpdateProfileDto requestDto) {
+    public UserResponseDto updateProfile(@RequestBody @Valid UserUpdateProfileDto requestDto) {
         return userService.updateUser(requestDto);
     }
 }

@@ -1,11 +1,13 @@
 package mate.carsharingapp.model.payment;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
@@ -13,7 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mate.carsharingapp.model.rental.Rental;
 
-//@Entity
+@Entity
 @Getter
 @Setter
 @Table(name = "payments")
@@ -26,11 +28,11 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private Type type;
     @ManyToOne
-    @Column(name = "rental_id",nullable = false)
-    private Rental rentalId;
+    @JoinColumn(name = "rental_id",nullable = false)
+    private Rental rental;
     @Column(name = "session_url", nullable = false)
     private String sessionUrl;
-    @Column(name = "session_id", unique = true, nullable = false)
+    @Column(name = "session_id", unique = true, nullable = false,length = 500)
     private String sessionId;
     @Column(nullable = false)
     private BigDecimal amountToPay;
