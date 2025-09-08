@@ -32,5 +32,7 @@ services:
       "spring.datasource.username": "${MYSQLDB_USER}",
       "spring.datasource.password": "${MYSQLDB_ROOT_PASSWORD}",
       "jwt.expiration": "${JWT_EXPIRATION}",
-      "jwt.secret": "${JWT_SECRET}"
+      "jwt.secret": "${JWT_SECRET}",
+      "telegram.bot.token": "${TELEGRAM_TOKEN}",
+      "stripe.api.key":"${STRIPE_SECRET_KEY}"
       }'
