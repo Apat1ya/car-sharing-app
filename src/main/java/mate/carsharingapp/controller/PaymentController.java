@@ -8,12 +8,14 @@ import mate.carsharingapp.dto.payment.PaymentDto;
 import mate.carsharingapp.dto.payment.PaymentRequestDto;
 import mate.carsharingapp.dto.payment.PaymentResponseDto;
 import mate.carsharingapp.service.payment.PaymentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -36,6 +38,7 @@ public class PaymentController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('MANAGER','CUSTOMER')")
+    @ResponseStatus(HttpStatus.CREATED)
     @Operation(
             summary = "Create payment session",
             description = "Creates a payment session for the given rental and returns session info"

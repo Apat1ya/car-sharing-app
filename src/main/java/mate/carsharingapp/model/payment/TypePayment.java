@@ -1,6 +1,6 @@
 package mate.carsharingapp.model.payment;
 
-public enum Type {
+public enum TypePayment {
     PAYMENT,
     FINE
 }

@@ -26,7 +26,7 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private Status status;
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private TypePayment typePayment;
     @ManyToOne
     @JoinColumn(name = "rental_id",nullable = false)
     private Rental rental;

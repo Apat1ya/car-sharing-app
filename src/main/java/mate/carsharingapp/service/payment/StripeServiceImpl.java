@@ -42,7 +42,8 @@ public class StripeServiceImpl implements StripeService {
                                             .longValue())
                                     .setProductData(SessionCreateParams.LineItem.PriceData
                                             .ProductData.builder()
-                                            .setName("Car rental: " + requestDto.getType().name())
+                                            .setName("Car rental: "
+                                                    + requestDto.getTypePayment().name())
                                             .build())
                                     .build())
                             .build())

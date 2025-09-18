@@ -53,7 +53,7 @@ public class PaymentServiceImpl implements PaymentService {
         PaymentResponseDto session = stripeService.createSession(requestDto,builder,amountToPay);
         Payment payment = new Payment();
         payment.setStatus(Status.PENDING);
-        payment.setType(requestDto.getType());
+        payment.setTypePayment(requestDto.getTypePayment());
         payment.setRental(rental);
         payment.setSessionUrl(session.sessionUrl());
         payment.setSessionId(session.sessionId());
