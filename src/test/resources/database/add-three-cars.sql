@@ -1,3 +1,5 @@
+DELETE FROM cars;
+
 INSERT INTO cars (id, model, brand, type,inventory, daily_fee, is_deleted)
 VALUES
 (1, 'model 1', 'brand 1','SEDAN',1, 10.99, false),
