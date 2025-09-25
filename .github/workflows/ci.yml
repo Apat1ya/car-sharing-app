@@ -15,6 +15,12 @@ jobs:
           distribution: 'adopt'
           cache: maven
       - name: Build with Maven
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
         run: mvn --batch-mode --update-snapshots verify
       - name: Run tests
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
         run: mvn test -Dspring.profiles.active=test
