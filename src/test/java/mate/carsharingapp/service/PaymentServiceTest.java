@@ -116,14 +116,14 @@ public class PaymentServiceTest {
         List<Payment> payments = List.of(
                 createFirstPayment(),
                 createSecondPayment());
-        when(paymentRepository.findAllPaymentsByUserId(userId)).thenReturn(payments);
+        when(paymentRepository.findAllByRentalUserId(userId)).thenReturn(payments);
         when(paymentMapper.toDto(payments.get(0))).thenReturn(paymentDtos.get(0));
         when(paymentMapper.toDto(payments.get(1))).thenReturn(paymentDtos.get(1));
 
         List<PaymentDto> actual = paymentService.getPaymentsByUserId(userId);
 
         assertEquals(actual, paymentDtos);
-        verify(paymentRepository).findAllPaymentsByUserId(userId);
+        verify(paymentRepository).findAllByRentalUserId(userId);
         verify(paymentMapper).toDto(payments.get(0));
         verify(paymentMapper).toDto(payments.get(1));
     }

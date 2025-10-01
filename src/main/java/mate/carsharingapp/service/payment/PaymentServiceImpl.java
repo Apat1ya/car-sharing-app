@@ -65,7 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<PaymentDto> getPaymentsByUserId(Long userId) {
-        return paymentRepository.findAllPaymentsByUserId(userId)
+        return paymentRepository.findAllByRentalUserId(userId)
                 .stream()
                 .map(paymentMapper::toDto)
                 .toList();
