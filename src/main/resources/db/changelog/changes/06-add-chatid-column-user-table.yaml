@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-telegram-chat-id-to-user
+      author: developer
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: telegram_chat_id
+                  type: BIGINT
